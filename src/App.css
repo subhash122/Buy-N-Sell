@@ -1,7 +1,4 @@
 
-.game--container {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  width: 306px;
-  margin: 50px auto;
+.grid--container {
+  margin:5% 0px;
 }
