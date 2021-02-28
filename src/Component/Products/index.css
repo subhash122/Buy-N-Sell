@@ -1,0 +1,10 @@
+.btn-next{
+    position: relative;
+    top :30px;
+    left: 50%;
+}
+.btn-prev{
+    position: relative;
+    top :30px;
+    left: 30%;
+}

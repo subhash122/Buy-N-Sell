@@ -18,11 +18,11 @@ const App = () => {
             <Route exact path="/">
               <Products apiURL={apiURL} />
             </Route>
-            <Route  path="/item/:id">
-              <Item apiURL={apiURL} />
-            </Route>
             <Route path="/category-:type" component={Category}>
               <Category apiURL={apiURL} />
+            </Route>
+            <Route path="/item/:id">
+              <Item apiURL={apiURL} />
             </Route>
           </Container>
         </Switch>

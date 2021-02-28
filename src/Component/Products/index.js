@@ -11,11 +11,15 @@ import {
   AccordionSummary,
   AccordionDetails,
   Box,
+  Button,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import React, { useState, useEffect } from "react";
-import { Link, Route } from "react-router-dom";
-import Item from "../Item";
+import { Link } from "react-router-dom";
+import "./index.css";
 
 const useStyles = makeStyles((theme) => ({
   element: {
@@ -44,34 +48,50 @@ const useStyles = makeStyles((theme) => ({
   content: {
     display: "block",
   },
+  media: {
+    width: "80%",
+    marginLeft: "10%",
+    border: "1.4px solid #cca",
+  },
+  favourites:{
+    position:'absolute',
+    right:'2%',
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+    height: 48,
+    padding: '0 20px',
+  }
 }));
 
 const Products = ({ apiURL }) => {
   const classes = useStyles();
-
+  const [pageItem, setpageItem] = useState([0, 8]);
   const [items, setItems] = useState([]);
   const [apiResponse, setapiResponse] = useState([]);
+
   useEffect(() => {
-    let data;
-    async function getData() {
-      data = await fetch(`${apiURL}/products`);
-      data = await data.json();
-      setapiResponse((apiResponse) => data);
-      let tempItems = data.map((element) => {
-        return (
+    if (apiResponse != false) {
+      let startIndex = pageItem[0],
+        endIndex = pageItem[1];
+      let tempItems = [];
+      for (let i = startIndex; i <= endIndex; i++) {
+        let markup = (
           <Grid item md={4}>
             <Link
               style={{ textDecoration: "none", color: "initial" }}
-              to={`/item/${element.id}`}
+              to={`/item/${apiResponse[i].id}`}
             >
               <Card className={classes.element}>
                 <CardActionArea>
                   <CardMedia
+                    className={classes.media}
                     component="img"
                     alt="Contemplative Reptile"
                     height="170"
-                    image={element.image}
-                    title={element.title}
+                    image={apiResponse[i].image}
+                    title={apiResponse[i].title}
                   />
                   <CardContent>
                     <Typography
@@ -79,14 +99,14 @@ const Products = ({ apiURL }) => {
                       variant="subtitle1"
                       component="subtitle1"
                     >
-                      {element.title.substring(0, 25)}
+                      {apiResponse[i].title.substring(0, 25)}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="textSecondary"
                       component="h6"
                     >
-                      Price :{element.price}
+                      Price :{apiResponse[i].price}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -94,14 +114,69 @@ const Products = ({ apiURL }) => {
             </Link>
           </Grid>
         );
-      });
-      setItems((items) => tempItems);
+        tempItems.push(markup);
+      }
+      setItems(tempItems);
     }
-    // const x=await fetch("https://fakestoreapi.com/products")
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     setapiResponse((apiResponse) => res);
-    //   });
+  }, [apiResponse, pageItem]);
+
+  const nextPage = () => {
+    if (pageItem[1] + 9 <= apiResponse.length - 1) {
+      setpageItem([pageItem[1] + 1, pageItem[1] + 9]);
+    } else {
+      setpageItem([pageItem[1] + 1, apiResponse.length - 1]);
+    }
+  };
+  const prevPage = () => {
+    setpageItem([pageItem[0] - 9, pageItem[0] - 1]);
+  };
+  useEffect(() => {
+    let data;
+    async function getData() {
+      data = await fetch(`${apiURL}/products`);
+      data = await data.json();
+      setapiResponse((apiResponse) => data);
+      // let tempItems = data.map((element) => {
+      //   return (
+      //     <Grid item md={4}>
+      //       <Link
+      //         style={{ textDecoration: "none", color: "initial" }}
+      //         to={`/item/${element.id}`}
+      //       >
+      //         <Card className={classes.element}>
+      //           <CardActionArea>
+      //             <CardMedia
+      //               className={classes.media}
+      //               component="img"
+      //               alt="Contemplative Reptile"
+      //               height="170"
+      //               image={element.image}
+      //               title={element.title}
+      //             />
+      //             <CardContent>
+      //               <Typography
+      //                 gutterBottom
+      //                 variant="subtitle1"
+      //                 component="subtitle1"
+      //               >
+      //                 {element.title.substring(0, 25)}
+      //               </Typography>
+      //               <Typography
+      //                 variant="body2"
+      //                 color="textSecondary"
+      //                 component="h6"
+      //               >
+      //                 Price :{element.price}
+      //               </Typography>
+      //             </CardContent>
+      //           </CardActionArea>
+      //         </Card>
+      //       </Link>
+      //     </Grid>
+      //   );
+      // });
+      // setItems((items) => tempItems);
+    }
     getData();
   }, []);
   return (
@@ -112,9 +187,7 @@ const Products = ({ apiURL }) => {
         </div>
       ) : (
         <>
-          {/* <Route path="/item/:id">
-              <Item apiURL={apiURL} />
-          </Route> */}
+          {/* <Button className={classes.favourites} endIcon={<FavoriteIcon/>}>Favourites</Button> */}
           <Accordion className={classes.accordion}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -160,6 +233,34 @@ const Products = ({ apiURL }) => {
               {items}
             </Grid>
           </div>
+          {pageItem[0] !== 0 ? (
+            <Button
+              className="btn-prev"
+              onClick={prevPage}
+              variant="contained"
+              color="primary"
+              // className={classes.button}
+              startIcon={<NavigateBeforeIcon />}
+            >
+              Prev
+            </Button>
+          ) : (
+            ""
+          )}
+          {pageItem[1] !== apiResponse.length - 1 ? (
+            <Button
+              className="btn-next"
+              onClick={nextPage}
+              variant="contained"
+              color="primary"
+              // className={classes.button}
+              endIcon={<NavigateNextIcon />}
+            >
+              Next
+            </Button>
+          ) : (
+            ""
+          )}
         </>
       )}
     </div>
