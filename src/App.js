@@ -1,11 +1,12 @@
-import { Button, Container } from "@material-ui/core";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {Container } from "@material-ui/core";
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 // import faker from 'faker';
 import "./App.css";
 import Header from "./Component/Header";
 import Products from "./Component/Products";
 import Item from "./Component/Item";
 import Category from "./Component/Category";
+import Favourites from "./Component/Favourites";
 const apiURL = "https://fakestoreapi.com";
 
 const App = () => {
@@ -23,6 +24,9 @@ const App = () => {
             </Route>
             <Route path="/item/:id">
               <Item apiURL={apiURL} />
+            </Route>
+            <Route path="/favourites">
+              <Favourites apiURL={apiURL} />
             </Route>
           </Container>
         </Switch>

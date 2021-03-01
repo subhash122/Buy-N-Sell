@@ -22,10 +22,6 @@ import { Link } from "react-router-dom";
 import "./index.css";
 
 const useStyles = makeStyles((theme) => ({
-  element: {
-    maxWidth: 250,
-    height: 250,
-  },
   root: {
     flexGrow: 1,
   },
@@ -41,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     top: "25%",
     left: "2%",
     boxShadow: "none",
+    // backgroundColor:'inherit',
   },
   heading: {
     fontWeight: "600",
@@ -48,10 +45,15 @@ const useStyles = makeStyles((theme) => ({
   content: {
     display: "block",
   },
+  element: {
+    maxWidth: 250,
+    height: 250,
+  },
   media: {
     width: "80%",
     marginLeft: "10%",
     border: "1.4px solid #cca",
+    objectFit:'fill',
   },
   favourites:{
     position:'absolute',
@@ -61,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     color: 'white',
     height: 48,
-    padding: '0 20px',
+    padding: '0 15px',
   }
 }));
 
@@ -88,7 +90,7 @@ const Products = ({ apiURL }) => {
                   <CardMedia
                     className={classes.media}
                     component="img"
-                    alt="Contemplative Reptile"
+                    alt="loading"
                     height="170"
                     image={apiResponse[i].image}
                     title={apiResponse[i].title}
@@ -187,7 +189,7 @@ const Products = ({ apiURL }) => {
         </div>
       ) : (
         <>
-          {/* <Button className={classes.favourites} endIcon={<FavoriteIcon/>}>Favourites</Button> */}
+          <Link  to='/favourites'><Button className={classes.favourites} endIcon={<FavoriteIcon/>}>Favourites</Button></Link>
           <Accordion className={classes.accordion}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}

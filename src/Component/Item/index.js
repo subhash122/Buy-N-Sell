@@ -8,16 +8,10 @@ import {
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-// import { spacing, borders } from "@material-ui/system";
 import "./index.css";
 
-const theme = {
-  spacing: 8,
-};
+
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-  },
   prog: {
     display: "flex",
     "& > * + *": {
@@ -29,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor:'#222',
   },
   media: {
-    // height: 0,
+    height:'600px',
     width:"80%",
     border:'3px solid #847f86',
     marginLeft:'11%',
-    paddingTop: "56.25%", // 16:9
+    objectFit:'fill',
   },
 }));
 
@@ -50,6 +44,7 @@ const Item = ({ apiURL }) => {
         <div>
           <Card className={classes.card}>
             <CardMedia
+              component="img"
               className={classes.media}
               image={`${data.image}`}
               title={`${data.title}`}

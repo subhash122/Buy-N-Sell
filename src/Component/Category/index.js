@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { NavLink, Link,useParams } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   element: {
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     width:'80%',
     marginLeft:"10%",
     border:'1.4px solid #cca',
+    objectFit:'fill',
   },
 }));
 
