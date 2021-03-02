@@ -16,7 +16,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./index.css";
@@ -46,25 +46,32 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
   },
   element: {
-    maxWidth: 250,
+    width: 250,
     height: 250,
+    transition: "0.13s",
+    "&:hover": {
+      boxShadow: " 1px 1px 5px 2px #999999",
+      width: 290,
+      height: 290,
+    },
   },
+  // element:{},
   media: {
     width: "80%",
     marginLeft: "10%",
     border: "1.4px solid #cca",
-    objectFit:'fill',
+    objectFit: "fill",
   },
-  favourites:{
-    position:'absolute',
-    right:'2%',
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  favourites: {
+    position: "absolute",
+    right: "2%",
+    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    color: 'white',
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    color: "white",
     height: 48,
-    padding: '0 15px',
-  }
+    padding: "0 15px",
+  },
 }));
 
 const Products = ({ apiURL }) => {
@@ -75,8 +82,8 @@ const Products = ({ apiURL }) => {
 
   useEffect(() => {
     if (apiResponse != false) {
-      let startIndex = pageItem[0],
-        endIndex = pageItem[1];
+      let startIndex = pageItem[0];
+      let endIndex = pageItem[1];
       let tempItems = [];
       for (let i = startIndex; i <= endIndex; i++) {
         let markup = (
@@ -86,32 +93,32 @@ const Products = ({ apiURL }) => {
               to={`/item/${apiResponse[i].id}`}
             >
               <Card className={classes.element}>
-                <CardActionArea>
-                  <CardMedia
-                    className={classes.media}
-                    component="img"
-                    alt="loading"
-                    height="170"
-                    image={apiResponse[i].image}
-                    title={apiResponse[i].title}
-                  />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="subtitle1"
-                      component="subtitle1"
-                    >
-                      {apiResponse[i].title.substring(0, 25)}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="h6"
-                    >
-                      Price :{apiResponse[i].price}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
+                {/* <CardActionArea> */}
+                <CardMedia
+                  className={classes.media}
+                  component="img"
+                  alt="loading"
+                  height="170"
+                  image={apiResponse[i].image}
+                  title={apiResponse[i].title}
+                />
+                <CardContent>
+                  <Typography
+                    gutterBottom
+                    variant="subtitle1"
+                    component="subtitle1"
+                  >
+                    {apiResponse[i].title.substring(0, 25)}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="h6"
+                  >
+                    Price :{apiResponse[i].price}
+                  </Typography>
+                </CardContent>
+                {/* </CardActionArea> */}
               </Card>
             </Link>
           </Grid>
@@ -138,46 +145,6 @@ const Products = ({ apiURL }) => {
       data = await fetch(`${apiURL}/products`);
       data = await data.json();
       setapiResponse((apiResponse) => data);
-      // let tempItems = data.map((element) => {
-      //   return (
-      //     <Grid item md={4}>
-      //       <Link
-      //         style={{ textDecoration: "none", color: "initial" }}
-      //         to={`/item/${element.id}`}
-      //       >
-      //         <Card className={classes.element}>
-      //           <CardActionArea>
-      //             <CardMedia
-      //               className={classes.media}
-      //               component="img"
-      //               alt="Contemplative Reptile"
-      //               height="170"
-      //               image={element.image}
-      //               title={element.title}
-      //             />
-      //             <CardContent>
-      //               <Typography
-      //                 gutterBottom
-      //                 variant="subtitle1"
-      //                 component="subtitle1"
-      //               >
-      //                 {element.title.substring(0, 25)}
-      //               </Typography>
-      //               <Typography
-      //                 variant="body2"
-      //                 color="textSecondary"
-      //                 component="h6"
-      //               >
-      //                 Price :{element.price}
-      //               </Typography>
-      //             </CardContent>
-      //           </CardActionArea>
-      //         </Card>
-      //       </Link>
-      //     </Grid>
-      //   );
-      // });
-      // setItems((items) => tempItems);
     }
     getData();
   }, []);
@@ -189,7 +156,11 @@ const Products = ({ apiURL }) => {
         </div>
       ) : (
         <>
-          <Link  to='/favourites'><Button className={classes.favourites} endIcon={<FavoriteIcon/>}>Favourites</Button></Link>
+          <Link to="/favourites">
+            <Button className={classes.favourites} endIcon={<FavoriteIcon />}>
+              Favourites
+            </Button>
+          </Link>
           <Accordion className={classes.accordion}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
