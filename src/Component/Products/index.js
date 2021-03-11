@@ -48,11 +48,12 @@ const useStyles = makeStyles((theme) => ({
   element: {
     width: 250,
     height: 250,
-    transition: "0.13s",
+    transition: "0.17s",
     "&:hover": {
       boxShadow: " 1px 1px 5px 2px #999999",
       width: 290,
-      height: 290,
+      height: 260,
+      paddingTop:'14%',
     },
   },
   // element:{},

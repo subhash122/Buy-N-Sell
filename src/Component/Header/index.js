@@ -15,23 +15,25 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import "./index.css";
 import { AccountCircle } from "@material-ui/icons";
 import { useState } from "react";
+import logo from "./logo.jpg";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
   title: {
-    marginLeft: 160,
+    marginLeft: "12%",
   },
-  appbar:{
-    backgroundColor:'#1976d2',
+  appbar: {
+    backgroundColor: "#f8fafa",
+    color: "#000",
   },
   search: {
     position: "relative",
     borderRadius: 20,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: fade(theme.palette.common.black, 0.2),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade(theme.palette.common.black, 0.08),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -102,9 +104,10 @@ const Header = () => {
     <div className={classes.grow}>
       <AppBar className={classes.appbar} position="static">
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <img className={classes.title} src={logo} height={70} />
+          {/* <Typography  variant="h6" noWrap>
             Buy N Sell
-          </Typography>
+          </Typography> */}
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
