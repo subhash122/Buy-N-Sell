@@ -5,34 +5,11 @@ import {
   CardMedia,
   CircularProgress,
   Grid,
-  makeStyles,
   Typography,
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { Link,useParams } from "react-router-dom";
-
-const useStyles = makeStyles((theme) => ({
-  element: {
-    maxWidth: 250,
-    height: 250,
-  },
-  root: {
-    flexGrow: 1,
-  },
-  prog: {
-    display: "flex",
-    "& > * + *": {
-      marginLeft: theme.spacing(2),
-    },
-    paddingLeft: "40%",
-  },
-  media:{
-    width:'80%',
-    marginLeft:"10%",
-    border:'1.4px solid #cca',
-    objectFit:'fill',
-  },
-}));
+import { Link, useParams } from "react-router-dom";
+import useStyles from "./styles.js";
 
 const Category = ({ apiURL }) => {
   const classes = useStyles();
@@ -52,7 +29,8 @@ const Category = ({ apiURL }) => {
             >
               <Card className={classes.element}>
                 <CardActionArea>
-                  <CardMedia className={classes.media}
+                  <CardMedia
+                    className={classes.media}
                     component="img"
                     alt="Contemplative Reptile"
                     height="170"
@@ -95,7 +73,6 @@ const Category = ({ apiURL }) => {
         </div>
       ) : (
         <>
-          
           <div className={classes.root}>
             <Grid container spacing={8}>
               {itemsList}
