@@ -1,6 +1,7 @@
 import {
   AppBar,
   Badge,
+  Button,
   IconButton,
   InputBase,
   Menu,
@@ -9,11 +10,11 @@ import {
   Typography,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import { AccountCircle } from "@material-ui/icons";
 import { useState } from "react";
 import logo from "./logo.jpg";
 import useStyles from "./styles.js";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const classes = useStyles();
@@ -46,9 +47,6 @@ const Header = () => {
       <AppBar className={classes.appbar} position="static">
         <Toolbar>
           <img className={classes.title} src={logo} height={70} />
-          {/* <Typography  variant="h6" noWrap>
-            Buy N Sell
-          </Typography> */}
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -63,12 +61,7 @@ const Header = () => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={0} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
+            {/* <IconButton
               aria-label="account of current user"
               //   aria-controls={menuId}
               aria-haspopup="true"
@@ -76,7 +69,27 @@ const Header = () => {
               color="inherit"
             >
               <AccountCircle />
-            </IconButton>
+            </IconButton> */}
+            <Link
+              style={{ textDecoration: "none", color: "initial" }}
+              to={`/login`}
+            >
+              <Button
+                className={classes.btn}
+                variant="outlined"
+                color="secondary"
+              >
+                Log-in
+              </Button>
+            </Link>
+            <Link
+              style={{ textDecoration: "none", color: "initial" }}
+              to={`/signup`}
+            >
+              <Button variant="outlined" color="secondary">
+                Sign-Up
+              </Button>
+            </Link>
           </div>
         </Toolbar>
       </AppBar>

@@ -7,13 +7,15 @@ import Products from "./Component/Products";
 import Item from "./Component/Item";
 import Category from "./Component/Category";
 import Favourites from "./Component/Favourites";
-const apiURL = "https://fakestoreapi.herokuapp.com";
+import Login from "./Component/Login/Login";
+import Signup from "./Component/Signup/Signup";
+const apiURL = "https://fakestoreapi.com";
 
 const App = () => {
   return (
     <div className="section">
-      <Header />
       <Router>
+        <Header />
         <Switch>
           <Container className="grid--container" maxWidth="md">
             <Route exact path="/">
@@ -27,6 +29,12 @@ const App = () => {
             </Route>
             <Route path="/favourites">
               <Favourites apiURL={apiURL} />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/signup">
+              <Signup />
             </Route>
           </Container>
         </Switch>

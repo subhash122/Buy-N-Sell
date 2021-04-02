@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f8fafa",
     color: "#000",
   },
+  btn: {
+    marginRight: "11px",
+  },
   search: {
     position: "relative",
     borderRadius: 20,

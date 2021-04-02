@@ -1,4 +1,8 @@
-.favourite-box{
-    border: 2px solid #cca;
-    display: flex;
+.favourite-box {
+  box-shadow: 0px 0px 2px 2px #cccccc;
+  display: flex;
+}
+
+.favourite-box:hover {
+  border: 2px solid #aaa;
 }

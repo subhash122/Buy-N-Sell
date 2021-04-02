@@ -1,9 +1,4 @@
-import {
-  Box,
-  CardMedia,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
+import { Box, CardMedia, makeStyles, Typography } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import "./index.css";
 
@@ -12,7 +7,7 @@ const useStyles = makeStyles({
     width: "160px",
     height: "140px",
     border: "1px solid #cca",
-    margin: "4%",
+    margin: "2%",
     objectFit: "fill",
   },
 });
@@ -25,25 +20,27 @@ const Favourites = ({ apiURL }) => {
       let data = await fetch(`${apiURL}/products/5`);
       data = await data.json();
       let markup = (
-        <div className="favourite-box">
-          <CardMedia
-            component="img"
-            className={classes.media}
-            image={`${data.image}`}
-            title={`${data.title}`}
-          />
+        <>
+          <div className="favourite-box">
+            <CardMedia
+              component="img"
+              className={classes.media}
+              image={`${data.image}`}
+              title={`${data.title}`}
+            />
 
-          <Box pt={5}>
-            <Box>
-              <Typography variant="h6" color="textPrimary">
-                {data.title}
-              </Typography>
+            <Box pt={4}>
+              <Box>
+                <Typography variant="h6" color="textPrimary">
+                  {data.title}
+                </Typography>
+              </Box>
+              <Box py={2}>
+                <Typography variant="subtitle1">Price:{data.price}</Typography>
+              </Box>
             </Box>
-            <Box py={2}>
-              <Typography variant="subtitle1">Price:{data.price}</Typography>
-            </Box>
-          </Box>
-        </div>
+          </div>
+        </>
       );
       setfavouriteList(markup);
     }
