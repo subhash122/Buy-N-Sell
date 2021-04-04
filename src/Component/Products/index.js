@@ -10,6 +10,8 @@ import {
   AccordionDetails,
   Box,
   Button,
+  createMuiTheme,
+  ThemeProvider,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
@@ -17,6 +19,7 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Footer from "../Footer/Footer";
 import "./index.css";
 import useStyles from "./styles.js";
 
@@ -98,89 +101,103 @@ const Products = ({ apiURL }) => {
     <div>
       {items == false ? (
         <div className={classes.prog}>
-          <CircularProgress size={90} />
+          <CircularProgress size={70} />
         </div>
       ) : (
-        <>
-          <Link to="/favourites">
-            <Button className={classes.favourites} endIcon={<FavoriteIcon />}>
-              Favourites
-            </Button>
-          </Link>
-          <Accordion className={classes.accordion}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography className={classes.heading}>Categories</Typography>
-            </AccordionSummary>
-            <AccordionDetails className={classes.content}>
-              <Box mt={0.5}></Box>
-              <Link
-                style={{ textDecoration: "none", color: "initial" }}
-                to={`Category-electronics`}
-              >
-                <Typography>Electronics</Typography>
-              </Link>
-              <Box mt={0.5}></Box>
-              <Link
-                style={{ textDecoration: "none", color: "initial" }}
-                to={`Category-jewelery`}
-              >
-                <Typography>Jewelery</Typography>
-              </Link>
-              <Box mt={0.5}></Box>
-              <Link
-                style={{ textDecoration: "none", color: "initial" }}
-                to={`Category-men clothing`}
-              >
-                <Typography>Men clothing</Typography>
-              </Link>
-              <Box mt={0.5}></Box>
-              <Link
-                style={{ textDecoration: "none", color: "initial" }}
-                to={`Category-women clothing`}
-              >
-                <Typography>Women clothing</Typography>
-              </Link>
-            </AccordionDetails>
-          </Accordion>
-
-          <div className={classes.root}>
-            <Grid container spacing={8}>
-              {items}
+        <div className={classes.wholecontainer}>
+          <Grid container>
+            <Grid item md>
+              <div className={classes.sideItem}>
+                <Accordion className={classes.accordion}>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography className={classes.heading}>
+                      Categories
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails className={classes.content}>
+                    <Box mt={0.5}></Box>
+                    <Link
+                      style={{ textDecoration: "none", color: "initial" }}
+                      to={`Category-electronics`}
+                    >
+                      <Typography>Electronics</Typography>
+                    </Link>
+                    <Box mt={0.5}></Box>
+                    <Link
+                      style={{ textDecoration: "none", color: "initial" }}
+                      to={`Category-jewelery`}
+                    >
+                      <Typography>Jewelery</Typography>
+                    </Link>
+                    <Box mt={0.5}></Box>
+                    <Link
+                      style={{ textDecoration: "none", color: "initial" }}
+                      to={`Category-men clothing`}
+                    >
+                      <Typography>Men clothing</Typography>
+                    </Link>
+                    <Box mt={0.5}></Box>
+                    <Link
+                      style={{ textDecoration: "none", color: "initial" }}
+                      to={`Category-women clothing`}
+                    >
+                      <Typography>Women clothing</Typography>
+                    </Link>
+                  </AccordionDetails>
+                </Accordion>
+              </div>
             </Grid>
-          </div>
-          {pageItem[0] !== 0 ? (
-            <Button
-              className="btn-prev"
-              onClick={prevPage}
-              variant="contained"
-              color="primary"
-              // className={classes.button}
-              startIcon={<NavigateBeforeIcon />}
-            >
-              Prev
-            </Button>
-          ) : (
-            ""
-          )}
-          {pageItem[1] !== apiResponse.length - 1 ? (
-            <Button
-              className="btn-next"
-              onClick={nextPage}
-              variant="contained"
-              color="primary"
-              // className={classes.button}
-              endIcon={<NavigateNextIcon />}
-            >
-              Next
-            </Button>
-          ) : (
-            ""
-          )}
-        </>
+
+            <Grid item md={8}>
+              <Grid className={classes.root} container spacing={5}>
+                {items}
+              </Grid>
+              {pageItem[0] !== 0 ? (
+                <Button
+                  className="btn-prev"
+                  onClick={prevPage}
+                  variant="contained"
+                  color="primary"
+                  // className={classes.button}
+                  startIcon={<NavigateBeforeIcon />}
+                >
+                  Prev
+                </Button>
+              ) : (
+                ""
+              )}
+              {pageItem[1] !== apiResponse.length - 1 ? (
+                <Button
+                  className="btn-next"
+                  onClick={nextPage}
+                  variant="contained"
+                  color="primary"
+                  // className={classes.button}
+                  endIcon={<NavigateNextIcon />}
+                >
+                  Next
+                </Button>
+              ) : (
+                ""
+              )}
+            </Grid>
+            <Grid className={classes.sideItem} item md>
+              <Link to="/favourites">
+                <Button
+                  className={classes.favourites}
+                  endIcon={<FavoriteIcon />}
+                >
+                  Favourites
+                </Button>
+              </Link>
+            </Grid>
+          </Grid>
+          <Footer />
+        </div>
       )}
     </div>
   );
