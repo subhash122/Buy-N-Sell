@@ -11,7 +11,8 @@ import Profile from "./Component/Profile/Profile";
 import axios from "axios";
 import ProductForm from "./Component/ProductForm";
 import "./App.css";
-const apiURL = "https://buy-n-sell--app.herokuapp.com";
+// const apiURL = "http://localhost:4000";
+const apiURL = "https://buy-n-sell--app.herokuapp.com/";
 
 const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false);
@@ -19,7 +20,7 @@ const App = () => {
   const [curPage, setcurPage] = useState(1);
   useEffect(() => {
     axios
-      .get("/users/authorization")
+      .get(`${apiURL}/users/authorization`, { withCredentials: true })
       .then((response) => {
         setcurUser(response.data.user);
         setisLoggedIn(true);
