@@ -11,9 +11,8 @@ import Profile from "./Component/Profile/Profile";
 import axios from "axios";
 import ProductForm from "./Component/ProductForm";
 import "./App.css";
-// const apiURL = "http://localhost:4000";
+
 const apiURL = "https://buy-n-sell--app.herokuapp.com";
-// const apiURL = "";
 
 const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false);
