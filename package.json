@@ -33,7 +33,6 @@
       "react-app/jest"
     ]
   },
-  "proxy":"https://buy-n-sell--app.herokuapp.com",
   "browserslist": {
     "production": [
       ">0.2%",
