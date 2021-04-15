@@ -1,11 +1,5 @@
-.header{
-    background-color:whitesmoke;
-    padding: 1% 10%;
-    border: 1px solid #e4e4e4;
-}
-.heading{
-    /* margin-left: 5%; */
-    color:rgb(223, 75, 75);
-    font-weight: bold;
-    font-size: 18px;
+.text {
+  margin: 14px 10px;
+  font-size: 15px;
+  border-radius: 3px;
 }

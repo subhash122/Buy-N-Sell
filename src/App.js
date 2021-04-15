@@ -1,46 +1,85 @@
-import { Container } from "@material-ui/core";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-// import faker from 'faker';
-import "./App.css";
 import Header from "./Component/Header";
-import Footer from "./Component/Footer/Footer";
 import Products from "./Component/Products";
 import Item from "./Component/Item";
-import Category from "./Component/Category";
 import Favourites from "./Component/Favourites";
-import Login from "./Component/Login/Login";
-import Signup from "./Component/Signup/Signup";
-const apiURL = "https://fakestoreapi.com";
+import Ads from "./Component/Ads";
+import Login from "./Component/Login";
+import Signup from "./Component/Signup";
+import Profile from "./Component/Profile/Profile";
+import axios from "axios";
+import ProductForm from "./Component/ProductForm";
+import "./App.css";
+const apiURL = "https://buy-n-sell--app.herokuapp.com";
 
 const App = () => {
+  const [isLoggedIn, setisLoggedIn] = useState(false);
+  const [curUser, setcurUser] = useState("");
+  const [curPage, setcurPage] = useState(1);
+  useEffect(() => {
+    axios
+      .get("/users/authorization")
+      .then((response) => {
+        setcurUser(response.data.user);
+        setisLoggedIn(true);
+      })
+      .catch((err) => {});
+  }, []);
+
   return (
     <div className="section">
       <Router>
-        <Header />
+        <Header
+          apiURL={apiURL}
+          isLoggedIn={isLoggedIn}
+          setcurUser={setcurUser}
+          setisLoggedIn={setisLoggedIn}
+          setcurPage={setcurPage}
+        />
         <Switch>
           <Route exact path="/">
-            <Products apiURL={apiURL} />
+            <Products
+              apiURL={apiURL}
+              isLoggedIn={isLoggedIn}
+              curUser={curUser}
+              setcurUser={setcurUser}
+              curPage={curPage}
+              setcurPage={setcurPage}
+            />
           </Route>
-          <Container className="grid--container" maxWidth="md">
-            <Route path="/category-:type" component={Category}>
-              <Category apiURL={apiURL} />
-            </Route>
-            <Route path="/item/:id">
-              <Item apiURL={apiURL} />
-            </Route>
-            <Route path="/favourites">
-              <Favourites apiURL={apiURL} />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/signup">
-              <Signup />
-            </Route>
-          </Container>
+          <Route exact path="/login">
+            <Login
+              apiURL={apiURL}
+              setisLoggedIn={setisLoggedIn}
+              setcurUser={setcurUser}
+              isLoggedIn={isLoggedIn}
+            />
+          </Route>
+          <Route exact path="/profile">
+            <Profile
+              curUser={curUser}
+              setcurUser={setcurUser}
+              apiURL={apiURL}
+            />
+          </Route>
+          <Route exact path="/productform">
+            <ProductForm apiURL={apiURL} />
+          </Route>
+          <Route exact path="/signup">
+            <Signup apiURL={apiURL} />
+          </Route>
+          <Route exact path="/item/:id">
+            <Item apiURL={apiURL} isLoggedIn={isLoggedIn} />
+          </Route>
+          <Route exact path="/favourites">
+            <Favourites apiURL={apiURL} curUser={curUser} />
+          </Route>
+          <Route exact path="/ads">
+            <Ads apiURL={apiURL} />
+          </Route>
         </Switch>
       </Router>
-      {/* <Container className="grid--container" maxWidth="md"><Products /></Container> */}
     </div>
   );
 };

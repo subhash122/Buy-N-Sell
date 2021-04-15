@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     height: "140px",
     border: "1px solid #cca",
     margin: "7%",
+    marginLeft: "10%",
     objectFit: "fill",
   },
   root: {
@@ -38,9 +39,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "5px",
     padding: theme.spacing(1),
     backgroundColor: theme.palette.background.paper,
-    marginLeft: "-110px",
+    marginLeft: "-70px",
     fontWeight: "600",
-    height: "50px",
+    height: "100px",
   },
   prog: {
     display: "flex",
@@ -48,10 +49,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Favourites = ({ curUser, apiURL }) => {
+const Favourites = ({ apiURL }) => {
   const classes = useStyles();
   const alert = useAlert();
-  const [favouriteList, setfavouriteList] = useState([]);
+  const [adsList, setadsList] = useState([]);
   const [openedId, setopenedId] = useState(null);
   const [open, setOpen] = useState(false);
   const [loading, setloading] = useState(true);
@@ -65,32 +66,23 @@ const Favourites = ({ curUser, apiURL }) => {
     setOpen(false);
   };
 
-  const deleteFavourite = async (id) => {
+  const deleteItem = async (productId) => {
     try {
-      setloading(true);
-      await axios({
-        method: "delete",
-        url: `${apiURL}/users/favourites`,
-        data: {
-          id,
-        },
-      });
-      curUser.favourites.splice(curUser.favourites.indexOf(id), 1);
-      setoperationPerformed((prev) => (prev == 0 ? 1 : 0));
+      let response = await axios.get(`${apiURL}/users/myAds/${productId}`);
+      console.log(response);
       alert.success("item deleted successfully");
+      setoperationPerformed((prev) => (prev == 0 ? 1 : 0));
     } catch (err) {
       console.log(err);
-      alert.error("something went wrong");
-    } finally {
-      setloading(false);
     }
   };
+
   useEffect(() => {
     async function getData() {
       try {
         setloading(true);
-        let response = await axios.get(`${apiURL}/users/favourites`);
-        setfavouriteList((favouriteList) => response.data.favourites);
+        let response = await axios.get(`${apiURL}/users/myAds`);
+        setadsList((adsList) => response.data.data.products);
         setloading(false);
       } catch (err) {
         alert.error("Something went wrong, please try again later");
@@ -113,17 +105,12 @@ const Favourites = ({ curUser, apiURL }) => {
                 style={{ fontWeight: 600 }}
                 color="primary"
               >
-                Your Favourites
+                Your Ads
               </Typography>
               <br></br>
-              {favouriteList.map((el, index) => (
+              {adsList.map((el, index) => (
                 <>
-                  <div
-                    key={el._id}
-                    className={
-                      !el.active ? "overlay favourite-box" : "favourite-box"
-                    }
-                  >
+                  <div key={el._id} className="favourite-box">
                     <Link to={`/item/${el._id}`}>
                       <CardMedia
                         className={classes.media}
@@ -140,13 +127,6 @@ const Favourites = ({ curUser, apiURL }) => {
                         marginLeft: "5%",
                       }}
                     >
-                      {!el.active ? (
-                        <h1 style={{ color: "orange" }}>
-                          this item is no longer available
-                        </h1>
-                      ) : (
-                        ""
-                      )}
                       <Box pt={4}>
                         <Box>
                           <Typography variant="h6" color="textPrimary">
@@ -177,11 +157,10 @@ const Favourites = ({ curUser, apiURL }) => {
                           {openedId === index ? (
                             open ? (
                               <div className={classes.dropdown}>
-                                <MenuItem
-                                  onClick={() => deleteFavourite(el._id)}
-                                >
-                                  Delete Favourite
+                                <MenuItem onClick={() => deleteItem(el._id)}>
+                                  Delete Ad
                                 </MenuItem>
+                                <MenuItem>Update Ad</MenuItem>
                               </div>
                             ) : null
                           ) : null}

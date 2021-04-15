@@ -3,11 +3,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   main: {
-    marginTop: theme.spacing(10),
+    marginTop: theme.spacing(7),
   },
   footer: {
     padding: theme.spacing(3, 2),
@@ -29,9 +29,9 @@ export default function StickyFooter() {
         <Container maxWidth="sm">
           <Typography variant="body2" color="textSecondary">
             {"Copyright © "}
-            <Link color="inherit" href="https://buy-n-sell.vercel.app/">
+            <Link color="inherit" to="/">
               Buy-N-Sell
-            </Link>{" "}
+            </Link>
             {new Date().getFullYear()}
             {"."}
           </Typography>

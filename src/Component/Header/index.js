@@ -1,25 +1,31 @@
 import {
   AppBar,
-  Badge,
   Button,
   IconButton,
-  InputBase,
   Menu,
   MenuItem,
   Toolbar,
-  Typography,
 } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
 import { AccountCircle } from "@material-ui/icons";
 import { useState } from "react";
-import logo from "./logo.jpg";
 import useStyles from "./styles.js";
+import { useAlert } from "react-alert";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import "./index.css";
+import logo from "./logo.jpg";
 
-const Header = () => {
+const Header = ({
+  isLoggedIn,
+  setcurUser,
+  setisLoggedIn,
+  setcurPage,
+  apiURL,
+}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
+  const alert = useAlert();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -27,7 +33,16 @@ const Header = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
+  const logout = async () => {
+    try {
+      await axios.get(`${apiURL}/users/logout`);
+      setisLoggedIn(false);
+      setcurUser("");
+      alert.success("successfully logged-out");
+    } catch (err) {
+      alert("some error occured");
+    }
+  };
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -37,8 +52,9 @@ const Header = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <Link to="/profile" style={{ textDecoration: "none", color: "initial" }}>
+        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      </Link>
     </Menu>
   );
 
@@ -46,50 +62,61 @@ const Header = () => {
     <div className={classes.grow}>
       <AppBar className={classes.appbar} position="static">
         <Toolbar>
-          <img className={classes.title} src={logo} height={70} />
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-            />
-          </div>
+          <Link
+            className={classes.title}
+            to="/"
+            style={{ textDecoration: "none", color: "initial" }}
+            onClick={() => setcurPage(1)}
+          >
+            <img src={logo} height={70} />
+          </Link>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {/* <IconButton
-              aria-label="account of current user"
-              //   aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton> */}
-            <Link
-              style={{ textDecoration: "none", color: "initial" }}
-              to={`/login`}
-            >
-              <Button
-                className={classes.btn}
-                variant="outlined"
-                color="secondary"
-              >
-                Log-in
-              </Button>
-            </Link>
-            <Link
-              style={{ textDecoration: "none", color: "initial" }}
-              to={`/signup`}
-            >
-              <Button variant="outlined" color="secondary">
-                Sign-Up
-              </Button>
-            </Link>
+            {isLoggedIn == true ? (
+              <>
+                <Button
+                  size="small"
+                  className={classes.logoutBtn}
+                  variant="outlined"
+                  color="secondary"
+                  onClick={logout}
+                >
+                  Log-out
+                </Button>
+                <IconButton
+                  aria-label="account of current user"
+                  // aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle fontSize="large" color="secondary" />
+                </IconButton>
+              </>
+            ) : (
+              <>
+                <Link
+                  style={{ textDecoration: "none", color: "initial" }}
+                  to={`/login`}
+                >
+                  <Button
+                    className={classes.btn}
+                    variant="outlined"
+                    color="secondary"
+                  >
+                    Log-in
+                  </Button>
+                </Link>
+                <Link
+                  style={{ textDecoration: "none", color: "initial" }}
+                  to={`/signup`}
+                >
+                  <Button variant="outlined" color="secondary">
+                    Sign-Up
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
         </Toolbar>
       </AppBar>

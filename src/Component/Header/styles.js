@@ -14,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     marginRight: "11px",
   },
+  logoutBtn: {
+    marginRight: "11px",
+    marginTop: "8px",
+    marginBottom: "9px",
+  },
   search: {
     position: "relative",
     borderRadius: 20,

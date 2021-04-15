@@ -1,0 +1,23 @@
+.box {
+  border: 3px black;
+}
+.img {
+  /* height: 500px; */
+  object-fit: fill;
+}
+.carousel .slider-wrapper {
+  background-color: #111112;
+}
+.carousel .thumbs-wrapper {
+  border: 1px solid rgb(216, 215, 215);
+  border-radius: 2px;
+  margin: 0px;
+}
+.whole-container {
+  margin-top: 5%;
+}
+.last-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

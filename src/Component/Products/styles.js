@@ -6,19 +6,10 @@ const useStyles = makeStyles((theme) => ({
   },
   prog: {
     display: "flex",
-    "& > * + *": {
-      marginLeft: theme.spacing(2),
-    },
-    paddingLeft: "40%",
+    paddingLeft: "45%",
   },
   accordion: {
-    // position: "absolute",
-    // // top: "25%",
-    // left: "2%",
-    // marginLeft: "20%",
     boxShadow: "none",
-    width: "70%",
-    // backgroundColor: "inherit",
   },
   heading: {
     fontWeight: "600",
@@ -32,21 +23,16 @@ const useStyles = makeStyles((theme) => ({
     transition: "0.17s",
     "&:hover": {
       boxShadow: " 1px 1px 5px 2px #999999",
-      width: 290,
-      height: 290,
-      paddingTop: "14%",
     },
   },
   media: {
-    width: "80%",
-    marginLeft: "10%",
     border: "1.4px solid #cca",
     objectFit: "fill",
   },
 
   favourites: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-    borderRadius: 3,
+    borderRadius: 5,
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     color: "white",
     height: 48,
@@ -54,10 +40,19 @@ const useStyles = makeStyles((theme) => ({
   },
   wholecontainer: {
     marginTop: "3.3%",
+    minHeight: "calc(100vh - 40vh)",
   },
-  sideItem: {
-    display: "flex",
-    justifyContent: "center",
+  singleProduct: {
+    position: "relative",
+  },
+  favIcon: {
+    position: "absolute",
+    bottom: 15,
+    right: 5,
+  },
+  paginationItem: {
+    marginTop: "40px",
+    marginLeft: "30%",
   },
 }));
 export default useStyles;

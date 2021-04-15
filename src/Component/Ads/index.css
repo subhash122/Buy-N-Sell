@@ -9,16 +9,10 @@
 .favourite-box:hover {
   border: 2px solid #aaa;
 }
-.overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 5;
-  pointer-events: none;
-}
 .popper {
   position: absolute;
   top: 2%;
   right: 0;
-  pointer-events: all;
 }
 .content {
   min-height: calc(100vh - 40vh);
