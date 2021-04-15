@@ -50,6 +50,7 @@ const Products = ({
         data: {
           id,
         },
+        withCredentials: true,
       });
       setcurUser(response.data.user);
     } catch (err) {
@@ -64,6 +65,7 @@ const Products = ({
         data: {
           id,
         },
+        withCredentials: true,
       });
       setcurUser(response.data.user);
     } catch (err) {
@@ -78,7 +80,9 @@ const Products = ({
     async function getData() {
       try {
         setloading(true);
-        let data = await axios.get(`${apiURL}/products${location.search}`);
+        let data = await axios.get(`${apiURL}/products${location.search}`, {
+          withCredentials: true,
+        });
         setloading(false);
         setproductList((productList) => data.data.data.products);
         setcountPages(Math.ceil(data.data.countProducts / 9));

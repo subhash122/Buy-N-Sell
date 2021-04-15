@@ -29,6 +29,7 @@ const Login = ({ setisLoggedIn, setcurUser, isLoggedIn, apiURL }) => {
           email,
           password,
         },
+        withCredentials: true ,
       });
       setisLoggedIn(true);
       setcurUser(response.data.data.user);

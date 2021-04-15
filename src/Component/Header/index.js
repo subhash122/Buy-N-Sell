@@ -35,7 +35,7 @@ const Header = ({
   };
   const logout = async () => {
     try {
-      await axios.get(`${apiURL}/users/logout`);
+      await axios.get(`${apiURL}/users/logout`, { withCredentials: true });
       setisLoggedIn(false);
       setcurUser("");
       alert.success("successfully logged-out");

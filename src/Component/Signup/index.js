@@ -37,6 +37,7 @@ const Signup = ({ apiURL }) => {
           password,
           passwordConfirm,
         },
+        withCredentials: true,
       });
       alert.success("Sign up successfully. please login");
       setsignUp(true);

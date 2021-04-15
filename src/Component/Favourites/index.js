@@ -74,6 +74,7 @@ const Favourites = ({ curUser, apiURL }) => {
         data: {
           id,
         },
+        withCredentials: true,
       });
       curUser.favourites.splice(curUser.favourites.indexOf(id), 1);
       setoperationPerformed((prev) => (prev == 0 ? 1 : 0));
@@ -89,7 +90,9 @@ const Favourites = ({ curUser, apiURL }) => {
     async function getData() {
       try {
         setloading(true);
-        let response = await axios.get(`${apiURL}/users/favourites`);
+        let response = await axios.get(`${apiURL}/users/favourites`, {
+          withCredentials: true,
+        });
         setfavouriteList((favouriteList) => response.data.favourites);
         setloading(false);
       } catch (err) {

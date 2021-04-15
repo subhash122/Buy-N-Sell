@@ -68,7 +68,9 @@ const Favourites = ({ apiURL }) => {
 
   const deleteItem = async (productId) => {
     try {
-      let response = await axios.get(`${apiURL}/users/myAds/${productId}`);
+      let response = await axios.get(`${apiURL}/users/myAds/${productId}`, {
+        withCredentials: true,
+      });
       console.log(response);
       alert.success("item deleted successfully");
       setoperationPerformed((prev) => (prev == 0 ? 1 : 0));
@@ -81,7 +83,9 @@ const Favourites = ({ apiURL }) => {
     async function getData() {
       try {
         setloading(true);
-        let response = await axios.get(`${apiURL}/users/myAds`);
+        let response = await axios.get(`${apiURL}/users/myAds`, {
+          withCredentials: true,
+        });
         setadsList((adsList) => response.data.data.products);
         setloading(false);
       } catch (err) {

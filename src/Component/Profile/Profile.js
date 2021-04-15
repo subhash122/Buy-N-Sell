@@ -73,6 +73,7 @@ const Profile = ({ curUser, setcurUser, apiURL }) => {
           email: userObj.email,
           phoneNo: userObj.phoneNo,
         },
+        withCredentials: true,
       });
       setcurUser(updatedUser.data.data.user);
       alert.success("Data updated successfully");
@@ -96,6 +97,7 @@ const Profile = ({ curUser, setcurUser, apiURL }) => {
           password,
           passwordConfirm,
         },
+        withCredentials: true,
       });
       alert.success("password updated successfully");
       document.getElementById("current-password").value = "";

@@ -27,7 +27,9 @@ const Item = ({ isLoggedIn, apiURL }) => {
     async function getData() {
       try {
         setloading(true);
-        let data = await axios.get(`${apiURL}/products/${id}`);
+        let data = await axios.get(`${apiURL}/products/${id}`, {
+          withCredentials: true,
+        });
         data = data.data.data.product;
         let markup = (
           <div className="whole-container">

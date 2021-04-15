@@ -61,6 +61,7 @@ const ProductForm = ({ apiURL }) => {
           price,
           category,
         },
+        withCredentials: true,
       });
       console.log(newProduct);
       alert.success("product added successfully");
