@@ -17,19 +17,27 @@ import Footer from "../Footer";
 const Login = ({ setisLoggedIn, setcurUser, isLoggedIn, apiURL }) => {
   const classes = useStyles();
   const alert = useAlert();
+  const [userDetails, setuserDetails] = useState({
+    email: "",
+    password: "",
+  });
+  const handleEmailChange = (event) => {
+    setuserDetails({ ...userDetails, email: event.target.value });
+  };
+  const handlePasswordChange = (event) => {
+    setuserDetails({ ...userDetails, password: event.target.value });
+  };
   const handleSubmit = async () => {
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
     let response;
     try {
       response = await axios({
         method: "post",
         url: `${apiURL}/users/login`,
         data: {
-          email,
-          password,
+          email: userDetails.email,
+          password: userDetails.password,
         },
-        withCredentials: true ,
+        withCredentials: true,
       });
       setisLoggedIn(true);
       setcurUser(response.data.data.user);
@@ -64,7 +72,8 @@ const Login = ({ setisLoggedIn, setcurUser, isLoggedIn, apiURL }) => {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
-                    autoFocus
+                    value={userDetails.email}
+                    onChange={handleEmailChange}
                   />
                   <TextField
                     variant="outlined"
@@ -76,6 +85,8 @@ const Login = ({ setisLoggedIn, setcurUser, isLoggedIn, apiURL }) => {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    value={userDetails.password}
+                    onChange={handlePasswordChange}
                   />
                   <Button
                     fullWidth

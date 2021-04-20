@@ -19,23 +19,40 @@ const Signup = ({ apiURL }) => {
   const classes = useStyles();
   const alert = useAlert();
   const [signUp, setsignUp] = useState(false);
+  const [userDetails, setuserDetails] = useState({
+    name: "",
+    email: "",
+    phoneNo: "",
+    password: "",
+    passwordConfirm: "",
+  });
 
+  const handleNameChange = (event) => {
+    setuserDetails({ ...userDetails, name: event.target.value });
+  };
+  const handleEmailChange = (event) => {
+    setuserDetails({ ...userDetails, email: event.target.value });
+  };
+  const handlePhoneNoChange = (event) => {
+    setuserDetails({ ...userDetails, phoneNo: event.target.value });
+  };
+  const handlePasswordChange = (event) => {
+    setuserDetails({ ...userDetails, password: event.target.value });
+  };
+  const handlePasswordConfirmChange = (event) => {
+    setuserDetails({ ...userDetails, passwordConfirm: event.target.value });
+  };
   const handleSubmit = async () => {
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const phoneNo = document.getElementById("phone-no").value;
-    const password = document.getElementById("password").value;
-    const passwordConfirm = document.getElementById("confirm-password").value;
     try {
       await axios({
         method: "post",
         url: `${apiURL}/users/signup`,
         data: {
-          name,
-          email,
-          phoneNo,
-          password,
-          passwordConfirm,
+          name: userDetails.name,
+          email: userDetails.email,
+          phoneNo: userDetails.phoneNo,
+          password: userDetails.password,
+          passwordConfirm: userDetails.passwordConfirm,
         },
         withCredentials: true,
       });
@@ -71,7 +88,8 @@ const Signup = ({ apiURL }) => {
                       fullWidth
                       id="name"
                       label="Name"
-                      autoFocus
+                      value={userDetails.name}
+                      onChange={handleNameChange}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -83,6 +101,8 @@ const Signup = ({ apiURL }) => {
                       label="Email Address"
                       name="email"
                       autoComplete="email"
+                      value={userDetails.email}
+                      onChange={handleEmailChange}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -94,6 +114,8 @@ const Signup = ({ apiURL }) => {
                       label="PhoneNo"
                       name="PhoneNo"
                       autoComplete="phoneNo"
+                      value={userDetails.phoneNo}
+                      onChange={handlePhoneNoChange}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -106,6 +128,8 @@ const Signup = ({ apiURL }) => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
+                      value={userDetails.password}
+                      onChange={handlePasswordChange}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -118,6 +142,8 @@ const Signup = ({ apiURL }) => {
                       type="password"
                       id="confirm-password"
                       autoComplete="confirm-password"
+                      value={userDetails.passwordConfirm}
+                      onChange={handlePasswordConfirmChange}
                     />
                   </Grid>
                 </Grid>

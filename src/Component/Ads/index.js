@@ -68,7 +68,9 @@ const Favourites = ({ apiURL }) => {
 
   const deleteItem = async (productId) => {
     try {
-      let response = await axios.get(`${apiURL}/users/myAds/${productId}`, {
+      let response = await axios({
+        method: "delete",
+        url: `${apiURL}/users/myAds/${productId}`,
         withCredentials: true,
       });
       console.log(response);
@@ -113,66 +115,62 @@ const Favourites = ({ apiURL }) => {
               </Typography>
               <br></br>
               {adsList.map((el, index) => (
-                <>
-                  <div key={el._id} className="favourite-box">
-                    <Link to={`/item/${el._id}`}>
-                      <CardMedia
-                        className={classes.media}
-                        component="img"
-                        image={`${el.images[0]}`}
-                        title={`${el.name}`}
-                      />
-                    </Link>
-                    <Link
-                      to={`/item/${el._id}`}
-                      style={{
-                        textDecoration: "none",
-                        color: "initial",
-                        marginLeft: "5%",
-                      }}
-                    >
-                      <Box pt={4}>
-                        <Box>
-                          <Typography variant="h6" color="textPrimary">
-                            {el.name}
-                          </Typography>
-                        </Box>
-                        <Box py={2}>
-                          <Typography variant="subtitle1">
-                            ₹{el.price}
-                          </Typography>
-                        </Box>
+                <div key={el._id} className="favourite-box">
+                  <Link to={`/item/${el._id}`}>
+                    <CardMedia
+                      className={classes.media}
+                      component="img"
+                      image={`${el.images[0]}`}
+                      title={`${el.name}`}
+                    />
+                  </Link>
+                  <Link
+                    to={`/item/${el._id}`}
+                    style={{
+                      textDecoration: "none",
+                      color: "initial",
+                      marginLeft: "5%",
+                    }}
+                  >
+                    <Box pt={4}>
+                      <Box>
+                        <Typography variant="h6" color="textPrimary">
+                          {el.name}
+                        </Typography>
                       </Box>
-                    </Link>
-                    <div className="popper">
-                      <ClickAwayListener
-                        onClickAway={
-                          openedId === index ? handleClickAway : () => {}
-                        }
-                      >
-                        <div className={classes.root}>
-                          <IconButton
-                            onClick={() => {
-                              handleClick(index);
-                            }}
-                          >
-                            <MoreHorizIcon fontSize="large" />
-                          </IconButton>
-                          {openedId === index ? (
-                            open ? (
-                              <div className={classes.dropdown}>
-                                <MenuItem onClick={() => deleteItem(el._id)}>
-                                  Delete Ad
-                                </MenuItem>
-                                <MenuItem>Update Ad</MenuItem>
-                              </div>
-                            ) : null
-                          ) : null}
-                        </div>
-                      </ClickAwayListener>
-                    </div>
+                      <Box py={2}>
+                        <Typography variant="subtitle1">₹{el.price}</Typography>
+                      </Box>
+                    </Box>
+                  </Link>
+                  <div className="popper">
+                    <ClickAwayListener
+                      onClickAway={
+                        openedId === index ? handleClickAway : () => {}
+                      }
+                    >
+                      <div className={classes.root}>
+                        <IconButton
+                          onClick={() => {
+                            handleClick(index);
+                          }}
+                        >
+                          <MoreHorizIcon fontSize="large" />
+                        </IconButton>
+                        {openedId === index ? (
+                          open ? (
+                            <div className={classes.dropdown}>
+                              <MenuItem onClick={() => deleteItem(el._id)}>
+                                Delete Ad
+                              </MenuItem>
+                              <MenuItem>Update Ad</MenuItem>
+                            </div>
+                          ) : null
+                        ) : null}
+                      </div>
+                    </ClickAwayListener>
                   </div>
-                </>
+                </div>
               ))}
             </Container>
           </div>

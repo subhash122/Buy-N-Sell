@@ -4,6 +4,7 @@ import {
   Container,
   FormControl,
   Grid,
+  InputAdornment,
   InputLabel,
   makeStyles,
   MenuItem,
@@ -15,6 +16,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useAlert } from "react-alert";
 import Footer from "../Footer";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -46,10 +48,12 @@ const ProductForm = ({ apiURL }) => {
   const handleChange = (event) => {
     setcategory(event.target.value);
   };
+
   const handleSubmit = async () => {
     let name = document.getElementById("title").value;
     let description = document.getElementById("description").value;
     let price = document.getElementById("price").value;
+
     try {
       setloading(true);
       let newProduct = await axios({
@@ -81,7 +85,11 @@ const ProductForm = ({ apiURL }) => {
         <>
           <Container component="main" maxWidth="md">
             <div className={classes.paper}>
-              <form className={classes.form} noValidate>
+              <form
+                className={classes.form}
+                noValidate
+                enctype="multipart/form-data"
+              >
                 <Typography variant="h5" color="primary">
                   Fill product details
                 </Typography>
@@ -122,6 +130,7 @@ const ProductForm = ({ apiURL }) => {
                       label="Price"
                     />
                   </Grid>
+
                   <Grid item xs={12}>
                     <FormControl variant="outlined" fullWidth>
                       <InputLabel id="demo-simple-select-outlined-label">
