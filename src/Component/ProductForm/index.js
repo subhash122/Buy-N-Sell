@@ -4,7 +4,6 @@ import {
   Container,
   FormControl,
   Grid,
-  InputAdornment,
   InputLabel,
   makeStyles,
   MenuItem,
@@ -43,28 +42,33 @@ const ProductForm = ({ apiURL }) => {
   const classes = useStyles();
   const alert = useAlert();
   const [category, setcategory] = useState("");
+  const [name, setname] = useState("");
+  const [description, setdescription] = useState("");
+  const [price, setprice] = useState("");
   const [loading, setloading] = useState(false);
+  const [photo1, setphoto1] = useState(null);
+  const [photo2, setphoto2] = useState(null);
+  const [photo3, setphoto3] = useState(null);
 
   const handleChange = (event) => {
     setcategory(event.target.value);
   };
 
   const handleSubmit = async () => {
-    let name = document.getElementById("title").value;
-    let description = document.getElementById("description").value;
-    let price = document.getElementById("price").value;
-
+    let formdata = new FormData();
+    formdata.append("name", name);
+    formdata.append("description", description);
+    formdata.append("price", price);
+    formdata.append("category", category);
+    if (photo1) formdata.append("photo1", photo1);
+    if (photo2) formdata.append("photo2", photo2);
+    if (photo3) formdata.append("photo3", photo3);
     try {
       setloading(true);
       let newProduct = await axios({
         method: "post",
         url: `${apiURL}/users/myAds`,
-        data: {
-          name,
-          description,
-          price,
-          category,
-        },
+        data: formdata,
         withCredentials: true,
       });
       console.log(newProduct);
@@ -97,14 +101,14 @@ const ProductForm = ({ apiURL }) => {
                 <Grid container spacing={6}>
                   <Grid item xs={12}>
                     <TextField
-                      autoComplete="Title"
                       name="Title"
                       variant="outlined"
                       required
                       fullWidth
                       id="title"
                       label="Title"
-                      autoFocus
+                      value={name}
+                      onChange={(event) => setname(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -116,6 +120,8 @@ const ProductForm = ({ apiURL }) => {
                       fullWidth
                       id="description"
                       label="Description"
+                      value={description}
+                      onChange={(event) => setdescription(event.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -128,9 +134,29 @@ const ProductForm = ({ apiURL }) => {
                       fullWidth
                       id="price"
                       label="Price"
+                      value={price}
+                      onChange={(event) => setprice(event.target.value)}
                     />
                   </Grid>
-
+                  <Grid item xs={12}>
+                    <h3>Add upto 3 Images</h3>
+                    <input
+                      type="file"
+                      name="first"
+                      onChange={(event) => setphoto1(event.target.files[0])}
+                    ></input>
+                    <input
+                      type="file"
+                      name="second"
+                      onChange={(event) => setphoto2(event.target.files[0])}
+                    ></input>
+                    <input
+                      type="file"
+                      name="third"
+                      onChange={(event) => setphoto3(event.target.files[0])}
+                    ></input>
+                  </Grid>
+                  ;
                   <Grid item xs={12}>
                     <FormControl variant="outlined" fullWidth>
                       <InputLabel id="demo-simple-select-outlined-label">
