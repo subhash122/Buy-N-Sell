@@ -12,7 +12,7 @@ import axios from "axios";
 import ProductForm from "./Component/ProductForm";
 import "./App.css";
 
-const apiURL = "https://buy-n-sell--app.herokuapp.com";
+const apiURL = "https://buy-n-sell.up.railway.app";
 
 const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false);
