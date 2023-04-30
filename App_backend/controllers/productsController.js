@@ -1,27 +1,42 @@
 const Product = require("../models/productModel");
+const { google } = require('googleapis');
 const multer = require("multer");
+const fs = require('fs');
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const APIFeatures = require("../utils/apiFeatures");
-
-let Storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, "./images");
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
-  },
-});
+const { PassThrough } = require("stream");
 
 let upload = multer({
-  storage: Storage,
+  storage: multer.memoryStorage()
 });
 
 exports.uploadImage = upload.any();
 
 exports.createProduct = catchAsync(async (req, res, next) => {
+  const auth = new google.auth.GoogleAuth({
+    keyFile: './googleCredentials.json',
+    scopes: ['https://www.googleapis.com/auth/drive'],
+  });
+  const service = google.drive({ version: 'v3', auth });
+  const uploadedFilesArr = await Promise.all(req.files.map((curItem) => {
+    let fileToUpload = new PassThrough().end(curItem.buffer)
+    return service.files.create({                   //uploads file to google drive folder and returns metadata of file
+      requestBody: {
+        name: `${curItem.fieldname + '_' + Date.now() + '_' + curItem.originalname}`,
+        parents: [process.env.GOOGLE_API_FOLDER_ID]
+      },
+      media: {
+        mimeType: `${curItem.mimetype}`,
+        body: fileToUpload,
+      }
+    });
+  }));
+
   req.images = [];
-  req.files.forEach((el) => req.images.push(el.filename));
+  uploadedFilesArr.forEach((uploadedFile) => {
+    req.images.push(`https://drive.google.com/uc?export=view&id=${uploadedFile.data.id}`)
+  })
   const newProduct = await Product.create({
     ...req.body,
     images: [...req.images],
